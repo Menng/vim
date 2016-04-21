@@ -293,6 +293,7 @@ let Tlist_File_Fold_Auto_Close = 1      "当同时显示多个文件中的tag时
 let Tlist_GainFocus_On_ToggleOpen = 1   "Taglist窗口打开时，立刻切换为有焦点状态
 map t :TlistToggle                      "热键设置
 
+set tags=/home/xxx/myproject/tags       "重要！不同目录下都起作用，绝对路径
 set tags=tags;                          "重要！不同目录下都起作用
 set autochdir                           "重要！不同目录下都起作用
 
