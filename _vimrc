@@ -130,37 +130,16 @@ endif
 
 " 使用Vundle来管理插件，这个必须要有。
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'gmarik/vundle'
 
 " 以下为要安装或更新的插件，不同仓库都有（具体书写规范请参考帮助）
-Plugin 'scrooloose/nerdtree'
-Plugin 'taglist.vim'                   "安装完需要在项目文件夹下执行 $ctags -R *
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'                "目录树
+Plugin 'taglist.vim'                        "安装完需要在项目文件夹下执行 $ctags -R *
+Plugin 'altercation/vim-colors-solarized'   "主题
 Plugin 'szw/vim-tags'
-Plugin 'brookhong/cscope.vim'
-" Plugin 'a.vim'
-" Plugin 'Align'
-" Plugin 'jiangmiao/auto-pairs'
-" Plugin 'bufexplorer.zip'
-" Plugin 'ccvext.vim'
-" Plugin 'cSyntaxAfter'
-" Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'mattn/emmet-vim'
-" Plugin 'Yggdroot/indentLine'
-" Plugin 'vim-javacompleteex'
-" Plugin 'Mark--Karkat'
-" Plugin 'Shougo/neocomplcache.vim'
-" Plugin 'scrooloose/nerdcommenter'
-" Plugin 'OmniCppComplete'
-" Plugin 'Lokaltog/vim-powerline'
-" Plugin 'repeat.vim'
-" Plugin 'msanders/snipmate.vim'
-" Plugin 'wesleyche/SrcExpl'
-" Plugin 'std_c.zip'
-" Plugin 'tpope/vim-surround'
-" Plugin 'scrooloose/syntastic'
-" Plugin 'majutsushi/tagbar'
-" Plugin 'TxtBrowser'
-" Plugin 'ZoomWin'
+"Plugin 'brookhong/cscope.vim'
+Plugin 'ag.vim'                             "内容搜索
+
 
 call vundle#end()
 filetype plugin indent on
@@ -300,26 +279,29 @@ set hidden "允许在有未保存的修改时切换缓冲区
 set shell=cmd.exe
 set shellcmdflag=/C
 
-"Plugin
-" execute pathogen#infect()
+" -----------------------------------------------------------------------------
+"  < Taglists 插件配置 >
+" -----------------------------------------------------------------------------
+let Tlist_Ctags_Cmd='ctags'
+let Tlist_Show_One_File=1               "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_WinWidt =28                   "设置taglist的宽度
+let Tlist_Exit_OnlyWindow=1             "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Use_Right_Window=1            "在右侧窗口中显示taglist窗口
+"let Tlist_Use_Left_Windo =1             "在左侧窗口中显示taglist窗口
+"let Tlist_Sort_Type ='name'             "Tag的排序规则，以名字排序。默认是以在文件中出现的顺序排序
+let Tlist_File_Fold_Auto_Close = 1      "当同时显示多个文件中的tag时，设置为1，可使taglist只显示当前文件tag，其它文件的tag都被折叠起来
+let Tlist_GainFocus_On_ToggleOpen = 1   "Taglist窗口打开时，立刻切换为有焦点状态
+map t :TlistToggle                      "热键设置
 
-" Taglists
-"let Tlist_Show_One_File=1 
-"let Tlist_Exit_OnlyWindow=1
+set tags=tags;                          "重要！不同目录下都起作用
+set autochdir                           "重要！不同目录下都起作用
 
 " -----------------------------------------------------------------------------
-"  < nerdtree 插件配置 >
+"  < NERDTree 插件配置 >
 " -----------------------------------------------------------------------------
 " 有目录村结构的文件浏览插件
 " 常规模式下输入 F2 调用插件
 nmap <F2> :NERDTreeToggle<CR>
-
-" Grep
-nnoremap <silent> <F3> :Grep<CR>
-
-"source $VIMRUNTIME/vimrc_example.vim
-"source $VIMRUNTIME/mswin.vim
-behave mswin
 
 "自动缩进
 if has("autocmd")
