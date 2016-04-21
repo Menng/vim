@@ -139,7 +139,7 @@ Plugin 'altercation/vim-colors-solarized'   "主题
 Plugin 'szw/vim-tags'
 "Plugin 'brookhong/cscope.vim'
 Plugin 'ag.vim'                             "内容搜索
-
+Plugin 'phpcomplete.vim'                    "PHP自动补全
 
 call vundle#end()
 filetype plugin indent on
