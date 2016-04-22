@@ -307,6 +307,13 @@ let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
 
+" -----------------------------------------------------------------------------
+"  < CtrlP 插件配置 >
+" -----------------------------------------------------------------------------
+" 快速查找文件插件
+let g:ctrlp_map='<c-p>'
+let g:ctrlp_cmd='CtrlP'
+
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
