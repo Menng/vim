@@ -141,6 +141,7 @@ Plugin 'szw/vim-tags'
 Plugin 'ag.vim'                             "内容搜索
 "Plugin 'Valloric/YouCompleteMe'             "代码补全,Ctrl+n
 Plugin 'Shougo/neocomplete.vim'             "代码补全,Ctrl+n
+Plugin 'kien/ctrlp.vim'                     "文件快速查找,Ctrl+p
 
 call vundle#end()
 filetype plugin indent on
