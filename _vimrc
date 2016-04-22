@@ -309,6 +309,7 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 
 " -----------------------------------------------------------------------------
 "  < CtrlP 插件配置 >
+"  link: https://github.com/kien/ctrlp.vim
 " -----------------------------------------------------------------------------
 " 快速查找文件插件
 let g:ctrlp_map='<c-p>'
