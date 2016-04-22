@@ -139,8 +139,8 @@ Plugin 'altercation/vim-colors-solarized'   "主题
 Plugin 'szw/vim-tags'
 "Plugin 'brookhong/cscope.vim'
 Plugin 'ag.vim'                             "内容搜索
-"Plugin 'Valloric/YouCompleteMe'             "代码补全
-Plugin 'Shougo/neocomplete.vim'             "代码补全
+"Plugin 'Valloric/YouCompleteMe'             "代码补全,Ctrl+n
+Plugin 'Shougo/neocomplete.vim'             "代码补全,Ctrl+n
 
 call vundle#end()
 filetype plugin indent on
@@ -261,7 +261,11 @@ endif
 " -----------------------------------------------------------------------------
 "  < Taglists 插件配置 >
 " -----------------------------------------------------------------------------
-let Tlist_Ctags_Cmd='ctags'
+if g:iswindows                          "设定windows系统中ctags程序的位置
+	let Tlist_Ctags_Cmd='ctags'
+elseif g:islinux                        "设定linux系统中ctags程序的位置
+	let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+endif
 let Tlist_Show_One_File=1               "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_WinWidt =28                   "设置taglist的宽度
 let Tlist_Exit_OnlyWindow=1             "如果taglist窗口是最后一个窗口，则退出vim
