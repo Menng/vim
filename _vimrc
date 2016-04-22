@@ -138,7 +138,6 @@ Plugin 'taglist.vim'                        "安装完需要在项目文件夹�
 Plugin 'altercation/vim-colors-solarized'   "主题
 Plugin 'szw/vim-tags'
 "Plugin 'brookhong/cscope.vim'
-Plugin 'phpcomplete.vim'                    "PHP自动补全
 Plugin 'ag.vim'                             "内容搜索
 
 call vundle#end()
