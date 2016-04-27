@@ -1,7 +1,7 @@
 " =============================================================================
 "        << 判断操作系统是 Windows 还是 Linux 和判断是终端还是 Gvim >>
 " =============================================================================
- 
+
 " -----------------------------------------------------------------------------
 "  < 判断操作系统是否是 Windows 还是 Linux >
 " -----------------------------------------------------------------------------
@@ -17,7 +17,7 @@ if(has("win32") || has("win64") || has("win95") || has("win16"))
 else
     let g:islinux = 1
 endif
- 
+
 " -----------------------------------------------------------------------------
 "  < 判断是终端还是 Gvim >
 " -----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ endif
 " =============================================================================
 "                          << 以下为软件默认配置 >>
 " =============================================================================
- 
+
 " -----------------------------------------------------------------------------
 "  < Windows Gvim 默认配置> 做了一点修改
 " -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ if (g:iswindows && g:isGUI)
     source $VIMRUNTIME/mswin.vim
     behave mswin
     set diffexpr=MyDiff()
- 
+
     function MyDiff()
         let opt = '-a --binary '
         if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
@@ -71,13 +71,13 @@ endif
 if g:islinux
     set hlsearch        "高亮搜索
     set incsearch       "在输入要搜索的文字时，实时匹配
- 
+
     " Uncomment the following to have Vim jump to the last position when
     " reopening a file
     if has("autocmd")
         au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
- 
+
     if g:isGUI
         " Source a global configuration file if available
         if filereadable("/etc/vim/gvimrc.local")
@@ -87,17 +87,17 @@ if g:islinux
         " This line should not be removed as it ensures that various options are
         " properly set to work with the Vim-related packages available in Debian.
         runtime! debian.vim
- 
+
         " Vim5 and later versions support syntax highlighting. Uncommenting the next
         " line enables syntax highlighting by default.
         if has("syntax")
             syntax on
         endif
- 
+
         set mouse=a                    " 在任何模式下启用鼠标
         set t_Co=256                   " 在终端启用256色
         set backspace=2                " 设置退格键可用
- 
+
         " Source a global configuration file if available
         if filereadable("/etc/vim/vimrc.local")
             source /etc/vim/vimrc.local
@@ -108,7 +108,7 @@ endif
 " =============================================================================
 "                          << 以下为用户自定义配置 >>
 " =============================================================================
- 
+
 " -----------------------------------------------------------------------------
 "  < Vundle 插件管理工具配置 >
 " -----------------------------------------------------------------------------
@@ -152,16 +152,16 @@ filetype plugin indent on
 set encoding=utf-8                                    "设置gvim内部编码，默认不更改
 set fileencoding=utf-8                                "设置当前文件编码，可以更改，如：gbk（同cp936）
 set fileencodings=ucs-bom,utf-8,gbk,cp936,latin-1     "设置支持打开的文件的编码
- 
+
 " 文件格式，默认 ffs=dos,unix
 set fileformat=unix                                   "设置新（当前）文件的<EOL>格式，可以更改，如：dos（windows系统常用）
 set fileformats=unix,dos,mac                          "给出文件的<EOL>格式类型
- 
+
 if (g:iswindows && g:isGUI)
     "解决菜单乱码
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
- 
+
     "解决consle输出乱码
     language messages zh_CN.utf-8
 endif
@@ -196,7 +196,7 @@ nmap cM :%s/\r$//g<CR>:noh<CR>
 set ignorecase                                        "搜索模式里忽略大小写
 set smartcase                                         "如果搜索模式包含大写字符，不使用 'ignorecase' 选项，只有在输入搜索模式并且打开 'ignorecase' 选项时才会使用
 " set noincsearch                                       "在输入要搜索的文字时，取消实时匹配
- 
+
 " Ctrl + K 插入模式下光标向上移动
 imap <c-k> <Up>
 " Ctrl + J 插入模式下光标向下移动
@@ -223,7 +223,7 @@ set ruler 																						"右下角显示光标位置的状态行
 set nowrapscan 																				"搜索到文件两端时不重新搜索
 set vb t_vb= 																					"关闭提示音
 set hidden 																						"允许在有未保存的修改时切换缓冲区
- 
+
 " 设置 gVim 窗口初始位置及大小
 if g:isGUI
     au GUIEnter * simalt ~x                           "窗口启动时自动最大化
@@ -282,11 +282,17 @@ set autochdir                           "重要！不同目录下都起作用
 " 有目录村结构的文件浏览插件
 " 常规模式下输入 F2 调用插件
 nmap <F2> :NERDTreeToggle<CR>
+" Auto enable NERDTreeToggle
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " -----------------------------------------------------------------------------
 "  < Neocomplete 插件配置 >
 " -----------------------------------------------------------------------------
 " 代码补全插件
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
@@ -316,29 +322,17 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
   " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
 " Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " AutoComplPop like behavior.
 "let g:neocomplete#enable_auto_select = 1
@@ -382,29 +376,29 @@ if has("autocmd")
     augroup END
 else
     "智能缩进，相应的有cindent，官方说autoindent可以支持各种文件的缩进，但是效果会比只支持C/C++的cindent效果会差一点
-    set autoindent " always set autoindenting on 
+    set autoindent " always set autoindenting on
 endif " has("autocmd")
 
 "Multi-Language Start
-if has("multi_byte") 
-    " UTF-8 编码 
-    set encoding=utf-8 
-    set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1 
-    set termencoding=utf-8 
-    set formatoptions+=mM 
-    set fencs=utf-8,gbk 
-    if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)' 
-        set ambiwidth=double 
-    endif 
+if has("multi_byte")
+    " UTF-8 编码
+    set encoding=utf-8
+    set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+    set termencoding=utf-8
+    set formatoptions+=mM
+    set fencs=utf-8,gbk
+    if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)'
+        set ambiwidth=double
+    endif
     if (has("win32") || has("win95") || has("win64") || has("win16"))
-        source $VIMRUNTIME/delmenu.vim 
-        source $VIMRUNTIME/menu.vim 
-        language messages zh_CN.utf-8 
-        let g:vimrc_iswindows=1 
-    endif 
-else 
+        source $VIMRUNTIME/delmenu.vim
+        source $VIMRUNTIME/menu.vim
+        language messages zh_CN.utf-8
+        let g:vimrc_iswindows=1
+    endif
+else
     let g:vimrc_iswindows=0
-    echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte" 
+    echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte"
 endif
 autocmd BufEnter * lcd %:p:h
 "Multi-Language End
