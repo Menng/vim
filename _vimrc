@@ -180,6 +180,7 @@ set smarttab                                          "指定按一次backspace�
 set foldenable                                        "启用折叠
 "set foldmethod=indent                                 "indent 折叠方式
 set foldmethod=marker                                	"marker 折叠方式
+set showmatch                                         "设置匹配模式,类似当输入一个左括号时会匹配相应的那个右括号
 
 " 常规模式下用空格键来开关光标行所在折叠（注：zR 展开所有折叠，zM 关闭所有折叠）
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
