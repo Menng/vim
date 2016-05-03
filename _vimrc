@@ -16,6 +16,9 @@ if(has("win32") || has("win64") || has("win95") || has("win16"))
     au GUIEnter * simalt ~x
 else
     let g:islinux = 1
+    if has('mouse')
+        set mouse=v
+    endif
 endif
 
 " -----------------------------------------------------------------------------
