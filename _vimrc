@@ -142,8 +142,9 @@ Plugin 'altercation/vim-colors-solarized'   "主题
 Plugin 'szw/vim-tags'
 "Plugin 'brookhong/cscope.vim'
 Plugin 'ag.vim'                             "内容搜索
-"Plugin 'Valloric/YouCompleteMe'             "代码补全
-Plugin 'Shougo/neocomplete.vim'             "代码补全
+"Plugin 'Valloric/YouCompleteMe'             "代码补全,Ctrl+n
+Plugin 'Shougo/neocomplete.vim'             "代码补全,Ctrl+n
+Plugin 'kien/ctrlp.vim'                     "文件快速查找,Ctrl+p
 
 call vundle#end()
 filetype plugin indent on
@@ -180,16 +181,14 @@ set expandtab                                         "将Tab键转换为空格
 set tabstop=4                                         "设置Tab键的宽度，可以更改，如：宽度为2
 set shiftwidth=4                                      "换行时自动缩进宽度，可更改（宽度同tabstop）
 set smarttab                                          "指定按一次backspace就删除shiftwidth宽度
-set foldenable                                        "启用折叠
+"set foldenable                                        "启用折叠
 "set foldmethod=indent                                 "indent 折叠方式
-set foldmethod=marker                                	"marker 折叠方式
+"set foldmethod=marker                                 "marker 折叠方式
 set showmatch                                         "设置匹配模式,类似当输入一个左括号时会匹配相应的那个右括号
+set autoread                                          "当文件在外部被修改，自动更新该文件
 
 " 常规模式下用空格键来开关光标行所在折叠（注：zR 展开所有折叠，zM 关闭所有折叠）
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-
-" 当文件在外部被修改，自动更新该文件
-set autoread
 
 " 常规模式下输入 cS 清除行尾空格
 nmap cS :%s/\s\+$//g<CR>:noh<CR>
@@ -223,10 +222,11 @@ set cursorline                                        "突出显示当前行
 set guifont=Monaco:h10                                "设置字体:字号（字体名称空格用下划线代替）
 set nowrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
-set ruler 																						"右下角显示光标位置的状态行
-set nowrapscan 																				"搜索到文件两端时不重新搜索
-set vb t_vb= 																					"关闭提示音
-set hidden 																						"允许在有未保存的修改时切换缓冲区
+set ruler                                             "右下角显示光标位置的状态行
+set nowrapscan                                        "搜索到文件两端时不重新搜索
+set novisualbell                                      "关闭闪屏警报
+set vb t_vb=                                          "关闭提示音
+set hidden                                            "允许在有未保存的修改时切换缓冲区
 
 " 设置 gVim 窗口初始位置及大小
 if g:isGUI
@@ -265,7 +265,11 @@ endif
 " -----------------------------------------------------------------------------
 "  < Taglists 插件配置 >
 " -----------------------------------------------------------------------------
-let Tlist_Ctags_Cmd='ctags'
+if g:iswindows                          "设定windows系统中ctags程序的位置
+	let Tlist_Ctags_Cmd='ctags'
+elseif g:islinux                        "设定linux系统中ctags程序的位置
+	let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+endif
 let Tlist_Show_One_File=1               "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_WinWidt =28                   "设置taglist的宽度
 let Tlist_Exit_OnlyWindow=1             "如果taglist窗口是最后一个窗口，则退出vim
@@ -311,6 +315,29 @@ let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
+
+" -----------------------------------------------------------------------------
+"  < CtrlP 插件配置 >
+"  link: https://github.com/kien/ctrlp.vim
+" -----------------------------------------------------------------------------
+" 快速查找文件插件
+let g:ctrlp_map='<c-p>'
+let g:ctrlp_cmd='CtrlP'
+
+"忽略查找的文件类型
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+"用普通文件监听命令
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
+let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
