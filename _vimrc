@@ -142,7 +142,7 @@ Plugin 'altercation/vim-colors-solarized'   "主题
 Plugin 'szw/vim-tags'
 "Plugin 'brookhong/cscope.vim'
 Plugin 'ag.vim'                             "内容搜索
-"Plugin 'Valloric/YouCompleteMe'             "代码补全,Ctrl+n
+Plugin 'Valloric/YouCompleteMe'             "代码补全,Ctrl+n
 Plugin 'kien/ctrlp.vim'                     "文件快速查找,Ctrl+p
 
 call vundle#end()
