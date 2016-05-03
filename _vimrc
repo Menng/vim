@@ -143,7 +143,6 @@ Plugin 'szw/vim-tags'
 "Plugin 'brookhong/cscope.vim'
 Plugin 'ag.vim'                             "内容搜索
 "Plugin 'Valloric/YouCompleteMe'             "代码补全,Ctrl+n
-Plugin 'Shougo/neocomplete.vim'             "代码补全,Ctrl+n
 Plugin 'kien/ctrlp.vim'                     "文件快速查找,Ctrl+p
 
 call vundle#end()
@@ -293,28 +292,6 @@ nmap <F2> :NERDTreeToggle<CR>
 " Auto enable NERDTreeToggle
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" -----------------------------------------------------------------------------
-"  < Neocomplete 插件配置 >
-" -----------------------------------------------------------------------------
-" 代码补全插件
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
 
 " -----------------------------------------------------------------------------
 "  < CtrlP 插件配置 >
