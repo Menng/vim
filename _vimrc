@@ -69,7 +69,7 @@ if (g:iswindows && g:isGUI)
 endif
 
 " -----------------------------------------------------------------------------
-"  < Linux Gvim/Vim 默认配置> 做了一点修改
+"  < Linux Gvim/Vim 默认配置> 
 " -----------------------------------------------------------------------------
 if g:islinux
     set hlsearch        "高亮搜索
@@ -97,7 +97,7 @@ if g:islinux
             syntax on
         endif
 
-        set mouse=a                    " 在任何模式下启用鼠标
+        set mouse=v                    " 在任何模式下启用鼠标
         set t_Co=256                   " 在终端启用256色
         set backspace=2                " 设置退格键可用
 
