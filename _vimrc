@@ -223,9 +223,11 @@ set nowrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 set ruler                                             "右下角显示光标位置的状态行
 set nowrapscan                                        "搜索到文件两端时不重新搜索
-set novisualbell                                      "关闭闪屏警报
-set vb t_vb=                                          "关闭提示音
+"set novisualbell                                      "关闭闪屏警报
+"set vb t_vb=                                          "关闭提示音
 set hidden                                            "允许在有未保存的修改时切换缓冲区
+set visualbell t_vb= 
+au GuiEnter * set t_vb=
 
 " 设置 gVim 窗口初始位置及大小
 if g:isGUI
