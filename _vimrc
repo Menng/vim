@@ -237,6 +237,7 @@ if g:isGUI
 endif
 
 " 设置代码配色方案
+set background=dark
 if g:isGUI
     colorscheme solarized                             "Gvim配色方案
 else
@@ -308,10 +309,11 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+unlet g:ctrlp_custom_ignore
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
+  \ 'link': 'some_bad_symbolic_links'
   \ }
 
 "用普通文件监听命令
