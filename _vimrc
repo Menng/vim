@@ -215,6 +215,7 @@ au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
 "  < 界面配置 >
 " -----------------------------------------------------------------------------
 set nu!                                               "显示行号
+set relativenumber                                    "相对行号
 set laststatus=2                                      "启用状态栏信息
 set cmdheight=2                                       "设置命令行的高度为2，默认为1
 set cursorline                                        "突出显示当前行
