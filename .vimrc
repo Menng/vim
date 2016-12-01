@@ -144,6 +144,13 @@ Plugin 'szw/vim-tags'
 Plugin 'ag.vim'                             "内容搜索
 Plugin 'Valloric/YouCompleteMe'             "代码补全,Ctrl+n
 Plugin 'kien/ctrlp.vim'                     "文件快速查找,Ctrl+p
+Plugin 'vim-airline/vim-airline'            "状态栏
+Plugin 'vim-airline/vim-airline-themes'     "状态栏主题
+Plugin 'mattn/emmet-vim'                    "https://raw.githubusercontent.com/mattn/emmet-vim/master/TUTORIAL
+Plugin 'majutsushi/tagbar'                  "代码分析
+Plugin 'SirVer/ultisnips'                   "Snippets引擎,配合honza/vim-snippets使用
+Plugin 'honza/vim-snippets'                 "code snippet
+Plugin 'vim-syntastic/syntastic'            "语法检查
 
 call vundle#end()
 filetype plugin indent on
@@ -199,17 +206,9 @@ set ignorecase                                        "搜索模式里忽略大�
 set smartcase                                         "如果搜索模式包含大写字符，不使用 'ignorecase' 选项，只有在输入搜索模式并且打开 'ignorecase' 选项时才会使用
 " set noincsearch                                       "在输入要搜索的文字时，取消实时匹配
 
-" Ctrl + K 插入模式下光标向上移动
-imap <c-k> <Up>
-" Ctrl + J 插入模式下光标向下移动
-imap <c-j> <Down>
-" Ctrl + H 插入模式下光标向左移动
-imap <c-h> <Left>
-" Ctrl + L 插入模式下光标向右移动
-imap <c-l> <Right>
-
 " 启用每行超过80列的字符提示（字体变蓝并加下划线），不启用就注释掉
 au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
+
 
 " -----------------------------------------------------------------------------
 "  < 界面配置 >
@@ -265,6 +264,33 @@ if g:isGUI
     \endif<CR>
 endif
 
+
+" -----------------------------------------------------------------------------
+"  < 快捷键配置 >
+" -----------------------------------------------------------------------------
+" Ctrl+S 映射为保存
+nnoremap <C-S> :w<CR>
+inoremap <C-S> <Esc>:w<CR>a
+
+" Ctrl+C 复制，Ctrl+V 粘贴
+inoremap <C-C> y
+inoremap <C-V> <Esc>pa
+vnoremap <C-C> y
+vnoremap <C-V> p
+
+" F3 查找当前高亮的单词
+inoremap <F3>*<Esc>:noh<CR>:match Todo /\k*\%#\k*/<CR>v
+vnoremap <F3>*<Esc>:noh<CR>:match Todo /\k*\%#\k*/<CR>v
+
+" Ctrl + K 插入模式下光标向上移动
+imap <c-k> <Up>
+" Ctrl + J 插入模式下光标向下移动
+imap <c-j> <Down>
+" Ctrl + H 插入模式下光标向左移动
+imap <c-h> <Left>
+" Ctrl + L 插入模式下光标向右移动
+imap <c-l> <Right>
+
 " -----------------------------------------------------------------------------
 "  < Taglists 插件配置 >
 " -----------------------------------------------------------------------------
@@ -287,6 +313,7 @@ map t :TlistToggle                      "热键设置
 set tags=tags;                          "重要！不同目录下都起作用
 set autochdir                           "重要！不同目录下都起作用
 
+
 " -----------------------------------------------------------------------------
 "  < NERDTree 插件配置 >
 " -----------------------------------------------------------------------------
@@ -296,6 +323,7 @@ nmap <F2> :NERDTreeToggle<CR>
 " Auto enable NERDTreeToggle
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 
 " -----------------------------------------------------------------------------
 "  < CtrlP 插件配置 >
@@ -309,7 +337,7 @@ let g:ctrlp_cmd='CtrlP'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|pyc)$'
 unlet g:ctrlp_custom_ignore
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
@@ -321,11 +349,58 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
 
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+
+" -----------------------------------------------------------------------------
+"  < tagbar 插件配置 >
+"  https://github.com/majutsushi/tagbar/blob/master/doc/tagbar.txt
+" -----------------------------------------------------------------------------
+if g:iswindows                          "设定windows系统中ctags程序的位置
+    let tagbar_ctags_bin = 'ctags'
+elseif g:islinux                        "设定linux系统中ctags程序的位置
+    let tagbar_ctags_bin = '/usr/bin/ctags'
 endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+nmap tb :TagbarToggle<cr>
+nmap <F8> :TagbarToggle<cr>
+
+let tagbar_width = 25
+let g:tagbar_zoomwidth = 0
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
+let g:tagbar_indent = 1
+let g:tagbar_show_linenumbers = 2
+let g:tagbar_autoshowtag = 1
+
+let g:tagbar_iconchars = ['▶', '▼']  "(default on Linux and Mac OS X)
+let g:tagbar_iconchars = ['▸', '▾']
+let g:tagbar_iconchars = ['▷', '◢']
+let g:tagbar_iconchars = ['+', '-']    "(default on Windows)
+
+
+" -----------------------------------------------------------------------------
+"  < vim-snippets 插件配置 >
+"  https://github.com/majutsushi/tagbar/blob/master/doc/tagbar.txt
+" -----------------------------------------------------------------------------
+"if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<C-J>"        "展开代码片段的键
+let g:UltiSnipsJumpForwardTrigger="<C-J>"
+let g:UltiSnipsJumpBackwardTrigger="<C-K>"
+
+
+" -----------------------------------------------------------------------------
+"  < vim-syntastic 插件配置 >
+"  https://github.com/vim-syntastic/syntastic
+" -----------------------------------------------------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
@@ -335,42 +410,6 @@ function! s:my_cr_function()
   " For no inserting <CR> key.
   "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
 
 "自动缩进
 if has("autocmd")
