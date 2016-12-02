@@ -179,7 +179,7 @@ endif
 " -----------------------------------------------------------------------------
 "  < 编写文件时的配置 >
 " -----------------------------------------------------------------------------
-filetype off                                          "启用文件类型侦测
+filetype on                                           "启用文件类型侦测
 filetype plugin on                                    "针对不同的文件类型加载对应的插件
 filetype plugin indent on                             "启用缩进
 set smartindent                                       "启用智能对齐方式
@@ -228,6 +228,8 @@ set nowrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 set ruler                                             "右下角显示光标位置的状态行
 set cursorcolumn                                      "高亮显示光标列
+set showcmd                                           "命令行显示输入的命令
+set showmode                                          "命令行显示vim当前模式
 set nowrapscan                                        "搜索到文件两端时不重新搜索
 "set novisualbell                                      "关闭闪屏警报
 "set vb t_vb=                                          "关闭提示音
@@ -329,7 +331,10 @@ nmap <F2> :NERDTreeToggle<CR>
 " Auto enable NERDTreeToggle
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
 " -----------------------------------------------------------------------------
 "  < CtrlP 插件配置 >
