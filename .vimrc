@@ -121,7 +121,7 @@ endif
 " 如果想在 windows 安装就必需先安装 "git for window"，可查阅网上资料
 
 set nocompatible "关闭兼容模式, 不要vim模仿vi模式
-filetype on
+filetype off
 
 if g:islinux
     set rtp+=~/.vim/bundle/vundle/
@@ -209,6 +209,11 @@ set smartcase                                         "如果搜索模式包含�
 " 启用每行超过80列的字符提示（字体变蓝并加下划线），不启用就注释掉
 au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
 
+"快速切换Paste模式，可在状态栏显示Paste
+nnoremap <F12> :set invpaste paste?<CR>
+imap <F12> <C-O>:set invpaste paste?<CR>
+set pastetoggle=<F12>
+
 
 " -----------------------------------------------------------------------------
 "  < 界面配置 >
@@ -222,6 +227,7 @@ set guifont=Monaco:h10                                "设置字体:字号（字
 set nowrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 set ruler                                             "右下角显示光标位置的状态行
+set cursorcolumn                                      "高亮显示光标列
 set nowrapscan                                        "搜索到文件两端时不重新搜索
 "set novisualbell                                      "关闭闪屏警报
 "set vb t_vb=                                          "关闭提示音
@@ -349,6 +355,29 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
 
+
+" -----------------------------------------------------------------------------
+"  < vim-airline 插件配置 >
+"  https://github.com/vim-airline/vim-airline
+" -----------------------------------------------------------------------------
+let g:airline#extensions#tabline#enabled = 1        "开启顶部tab栏
+let g:airline#extensions#tabline#buffer_nr_show = 1 "tabline中buffer显示编号
+
+" 映射切换buffer的键位
+nnoremap bn :bn<CR>
+nnoremap bp :bp<CR>
+" 映射<leader>num到num buffer
+map <leader>1 :b 1<CR>
+map <leader>2 :b 2<CR>
+map <leader>3 :b 3<CR>
+map <leader>4 :b 4<CR>
+map <leader>5 :b 5<CR>
+map <leader>6 :b 6<CR>
+map <leader>7 :b 7<CR>
+map <leader>8 :b 8<CR>
+map <leader>9 :b 9<CR>
+" 关闭当前buffer
+nnoremap <leader>d :bd#<CR>
 
 " -----------------------------------------------------------------------------
 "  < tagbar 插件配置 >
