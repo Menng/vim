@@ -115,7 +115,7 @@ endif
 " 用于更方便的管理vim插件，具体用法参考 :h vundle 帮助
 " Vundle工具安装方法为在终端输入如下命令
 " git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-" 如果想在 windows 安装就必需先安装 "git for window"，可查阅网上资料
+" 如果想在 windows 安装就必需先安装 `git for window`，可查阅网上资料
 
 set nocompatible "关闭兼容模式, 不要vim模仿vi模式
 filetype off
