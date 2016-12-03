@@ -1,15 +1,17 @@
-# when I type head + tab, I hope...
+# when I type head + <leader>tab, I hope...
 snippet head "Hexo post header" b
 ---
-title: ${1:title}
 layout: post
+title: ${1:title}
 guid: `!p
 import uuid
 if not snip.c:
-  guid = uuid.uuid4().get_hex()
+  guid = uuid.uuid4().hex
 snip.rv = guid
 `
 date: `!v strftime("%Y-%m-%d %H:%M:%S")`
+category:
+ - ${3}
 tags:
  - ${4}
 ---
