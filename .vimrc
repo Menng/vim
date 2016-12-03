@@ -69,11 +69,11 @@ if (g:iswindows && g:isGUI)
 endif
 
 " -----------------------------------------------------------------------------
-"  < Linux Gvim/Vim 默认配置> 
+"  < Linux Gvim/Vim 默认配置>
 " -----------------------------------------------------------------------------
 if g:islinux
     set hlsearch        "高亮搜索
-    set incsearch       "在输入要搜索的文字时，实时匹配
+    "set incsearch       "在输入要搜索的文字时，实时匹配
 
     " Uncomment the following to have Vim jump to the last position when
     " reopening a file
@@ -151,6 +151,7 @@ Plugin 'majutsushi/tagbar'                  "代码分析
 Plugin 'SirVer/ultisnips'                   "Snippets引擎,配合honza/vim-snippets使用
 Plugin 'honza/vim-snippets'                 "code snippet
 Plugin 'vim-syntastic/syntastic'            "语法检查
+Plugin 'scrooloose/nerdcommenter'           "代码注释
 
 call vundle#end()
 filetype plugin indent on
@@ -204,7 +205,7 @@ nmap cM :%s/\r$//g<CR>:noh<CR>
 
 set ignorecase                                        "搜索模式里忽略大小写
 set smartcase                                         "如果搜索模式包含大写字符，不使用 'ignorecase' 选项，只有在输入搜索模式并且打开 'ignorecase' 选项时才会使用
-" set noincsearch                                       "在输入要搜索的文字时，取消实时匹配
+"set noincsearch                                       "关闭实时搜索匹配
 
 " 启用每行超过80列的字符提示（字体变蓝并加下划线），不启用就注释掉
 au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
@@ -234,7 +235,7 @@ set nowrapscan                                        "搜索到文件两端时�
 "set novisualbell                                      "关闭闪屏警报
 "set vb t_vb=                                          "关闭提示音
 set hidden                                            "允许在有未保存的修改时切换缓冲区
-set visualbell t_vb= 
+set visualbell t_vb=
 au GuiEnter * set t_vb=
 
 " 设置 gVim 窗口初始位置及大小
@@ -315,7 +316,7 @@ let Tlist_Use_Right_Window=1            "在右侧窗口中显示taglist窗口
 "let Tlist_Sort_Type ='name'             "Tag的排序规则，以名字排序。默认是以在文件中出现的顺序排序
 let Tlist_File_Fold_Auto_Close = 1      "当同时显示多个文件中的tag时，设置为1，可使taglist只显示当前文件tag，其它文件的tag都被折叠起来
 let Tlist_GainFocus_On_ToggleOpen = 1   "Taglist窗口打开时，立刻切换为有焦点状态
-map t :TlistToggle                      "热键设置
+"map t :TlistToggle                      "热键设置
 
 "set tags=/home/xxx/myproject/tags       "重要！不同目录下都起作用，绝对路径
 set tags=tags;                          "重要！不同目录下都起作用
@@ -384,6 +385,7 @@ map <leader>9 :b 9<CR>
 " 关闭当前buffer
 nnoremap <leader>d :bd#<CR>
 
+
 " -----------------------------------------------------------------------------
 "  < tagbar 插件配置 >
 "  https://github.com/majutsushi/tagbar/blob/master/doc/tagbar.txt
@@ -417,9 +419,9 @@ let g:tagbar_iconchars = ['+', '-']    "(default on Windows)
 "  https://github.com/majutsushi/tagbar/blob/master/doc/tagbar.txt
 " -----------------------------------------------------------------------------
 "if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<C-J>"        "展开代码片段的键
-let g:UltiSnipsJumpForwardTrigger="<C-J>"
-let g:UltiSnipsJumpBackwardTrigger="<C-K>"
+let g:UltiSnipsExpandTrigger="<leader><tab>"          "展开代码片段的键
+let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
 
 " -----------------------------------------------------------------------------
