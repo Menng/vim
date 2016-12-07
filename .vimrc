@@ -177,6 +177,42 @@ endif
 
 
 " -----------------------------------------------------------------------------
+"  < 快捷键配置 >
+" -----------------------------------------------------------------------------
+" leader键为逗号
+let mapleader=","
+
+" jk键为escape
+inoremap jk <esc>
+
+" leader+s为保存session
+nnoremap <leader>s :mksession<CR>
+
+" Ctrl+S 映射为保存
+nnoremap <C-S> :w<CR>
+inoremap <C-S> <Esc>:w<CR>a
+
+" Ctrl+C 复制，Ctrl+V 粘贴
+inoremap <C-C> y
+inoremap <C-V> <Esc>pa
+vnoremap <C-C> y
+vnoremap <C-V> p
+
+" F3 查找当前高亮的单词
+inoremap <F3>*<Esc>:noh<CR>:match Todo /\k*\%#\k*/<CR>v
+vnoremap <F3>*<Esc>:noh<CR>:match Todo /\k*\%#\k*/<CR>v
+
+" Ctrl + K 插入模式下光标向上移动
+imap <c-k> <Up>
+" Ctrl + J 插入模式下光标向下移动
+imap <c-j> <Down>
+" Ctrl + H 插入模式下光标向左移动
+imap <c-h> <Left>
+" Ctrl + L 插入模式下光标向右移动
+imap <c-l> <Right>
+
+
+" -----------------------------------------------------------------------------
 "  < 编写文件时的配置 >
 " -----------------------------------------------------------------------------
 filetype on                                           "启用文件类型侦测
@@ -275,42 +311,6 @@ if g:isGUI
         \set guioptions+=L <Bar>
     \endif<CR>
 endif
-
-
-" -----------------------------------------------------------------------------
-"  < 快捷键配置 >
-" -----------------------------------------------------------------------------
-" leader键为逗号
-let mapleader=","
-
-" jk键为escape
-inoremap jk <esc>
-
-" leader+s为保存session
-nnoremap <leader>s :mksession<CR>
-
-" Ctrl+S 映射为保存
-nnoremap <C-S> :w<CR>
-inoremap <C-S> <Esc>:w<CR>a
-
-" Ctrl+C 复制，Ctrl+V 粘贴
-inoremap <C-C> y
-inoremap <C-V> <Esc>pa
-vnoremap <C-C> y
-vnoremap <C-V> p
-
-" F3 查找当前高亮的单词
-inoremap <F3>*<Esc>:noh<CR>:match Todo /\k*\%#\k*/<CR>v
-vnoremap <F3>*<Esc>:noh<CR>:match Todo /\k*\%#\k*/<CR>v
-
-" Ctrl + K 插入模式下光标向上移动
-imap <c-k> <Up>
-" Ctrl + J 插入模式下光标向下移动
-imap <c-j> <Down>
-" Ctrl + H 插入模式下光标向左移动
-imap <c-h> <Left>
-" Ctrl + L 插入模式下光标向右移动
-imap <c-l> <Right>
 
 
 " -----------------------------------------------------------------------------
